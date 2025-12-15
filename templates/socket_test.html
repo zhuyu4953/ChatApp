@@ -1,0 +1,54 @@
+<!-- ChatApp/templates/socket_test.html (临时文件，测试用) -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>SocketIO Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        // 连接到Socket.IO服务器
+        var socket = io();
+
+        socket.on('connect', function() {
+            document.getElementById('status').innerText = 'Connected!';
+            console.log('Connected to Socket.IO server');
+        });
+
+        socket.on('disconnect', function() {
+            document.getElementById('status').innerText = 'Disconnected!';
+            console.log('Disconnected from Socket.IO server');
+        });
+
+        socket.on('my_response', function(data) {
+            var ul = document.getElementById('messages');
+            var li = document.createElement('li');
+            li.appendChild(document.createTextNode('Server: ' + data.data));
+            ul.appendChild(li);
+            console.log('Received: ' + data.data);
+        });
+
+        function sendMessage() {
+            var input = document.getElementById('message_input');
+            var message = input.value;
+            if (message) {
+                socket.emit('my_event', {data: message}); // 发送事件
+                input.value = '';
+                var ul = document.getElementById('messages');
+                var li = document.createElement('li');
+                li.appendChild(document.createTextNode('Client: ' + message));
+                ul.appendChild(li);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Socket.IO Test Page</h1>
+    <p>Status: <span id="status">Connecting...</span></p>
+    <div>
+        <input type="text" id="message_input" placeholder="Type a message">
+        <button onclick="sendMessage()">Send Test Message</button>
+    </div>
+    <h2>Messages:</h2>
+    <ul id="messages"></ul>
+</body>
+</html>
