@@ -1,0 +1,38 @@
+<!-- ChatApp/templates/chat.html -->
+{% extends "base.html" %}
+
+{% block title %}聊天 - ChatLink{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+    <aside class="sidebar">
+        <h3>在线用户</h3>
+        <ul id="online-users">
+            {# 这里未来会通过JS动态加载在线用户 #}
+            <li>用户A</li>
+            <li>用户B</li>
+            <li>用户C (我)</li>
+        </ul>
+    </aside>
+    <section class="chat-main">
+        <div class="chat-header">
+            <h2>与 <span id="current-chat-user">选择一个用户</span> 聊天中</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            {# 这里会显示聊天消息 #}
+            <div class="message received">
+                <span class="username">用户A:</span> 嗨，你好！
+                <span class="timestamp">14:30</span>
+            </div>
+            <div class="message sent">
+                <span class="username">我:</span> 你好啊！
+                <span class="timestamp">14:31</span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="输入消息...">
+            <button id="send-button">发送</button>
+        </div>
+    </section>
+</div>
+{% endblock %}
